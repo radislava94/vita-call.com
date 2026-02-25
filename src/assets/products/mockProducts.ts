@@ -6,7 +6,7 @@ import imgDia from "./DiaVita.jpeg";
 import imgOpti from "./OptiVita.jpeg";
 import imgPro from "./ProVita.jpeg";
 import imgVitaFit from "./VitaFit.jpeg";
-import imgStallion from "./Stallion Power.jpeg";
+import imgStallion from "./Stallion_Power.jpeg";
 
 const now = new Date();
 const daysAgo = (n: number) => new Date(now.getTime() - n * 86400000).toISOString();

@@ -1,5 +1,5 @@
 import { useId, useMemo, useState, type ReactNode } from "react";
-import { Loader2, Minus, Plus } from "lucide-react";
+import { Loader2 } from "lucide-react";
 
 import { Button } from "@/components/ui/button";
 import {
@@ -13,7 +13,6 @@ import {
 import { Input } from "@/components/ui/Input";
 import { Label } from "@/components/ui/label";
 import { useToast } from "@/hooks/use-toast";
-import { submitOrderRequest } from "@/lib/api";
 import type { Product } from "@/lib/types";
 
 interface QuickOrderDialogProps {
@@ -23,15 +22,17 @@ interface QuickOrderDialogProps {
 }
 
 interface FormState {
-  fullName: string;
-  phone: string;
-  quantity: number;
+  ime: string;
+  prezime: string;
+  telefon: string;
+  grad: string;
 }
 
 const initialFormState: FormState = {
-  fullName: "",
-  phone: "",
-  quantity: 1,
+  ime: "",
+  prezime: "",
+  telefon: "",
+  grad: "",
 };
 
 export function QuickOrderDialog({ product, trigger, defaultOpen = false }: QuickOrderDialogProps) {
@@ -47,9 +48,10 @@ export function QuickOrderDialog({ product, trigger, defaultOpen = false }: Quic
   }, [product]);
 
   const instanceId = useId();
-  const fullNameId = `${instanceId}-full-name`;
-  const phoneId = `${instanceId}-phone`;
-  const qtyId = `${instanceId}-qty`;
+  const imeId = `${instanceId}-ime`;
+  const prezimeId = `${instanceId}-prezime`;
+  const telefonId = `${instanceId}-telefon`;
+  const gradId = `${instanceId}-grad`;
 
   const handleOpenChange = (nextOpen: boolean) => {
     if (submitting) return;
@@ -67,15 +69,16 @@ export function QuickOrderDialog({ product, trigger, defaultOpen = false }: Quic
   const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
 
-    const fullName = formData.fullName.trim();
-    const phone = formData.phone.trim();
-    const quantity = Math.max(1, formData.quantity | 0);
+    const ime = formData.ime.trim();
+    const prezime = formData.prezime.trim();
+    const telefon = formData.telefon.trim();
+    const grad = formData.grad.trim();
 
-    if (!fullName || !phone) {
+    if (!ime || !prezime || !telefon || !grad) {
       toast({
         position: "center",
         title: "Недостасуваат податоци",
-        description: "Внесете име и презиме и телефон за потврда.",
+        description: "Внесете сите полиња.",
         variant: "destructive",
       });
       return;
@@ -83,20 +86,38 @@ export function QuickOrderDialog({ product, trigger, defaultOpen = false }: Quic
 
     setSubmitting(true);
     try {
-      await submitOrderRequest({
-        customerName: fullName,
-        customerPhone: phone,
-        items: [{ productId: product.id, quantity }],
-      });
+      const response = await fetch(
+        "https://huxlrpskxbdbzlhcpdyo.supabase.co/functions/v1/api/webhook/arthrovita-86ebec95",
+        {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({
+            ime,
+            prezime,
+            telefon,
+            grad,
+          }),
+        }
+      );
+
+      if (!response.ok) {
+        throw new Error("Не успеавме да ја испратиме вашата нарачка.");
+      }
 
       toast({
         position: "center",
-        title: "Нарачката е примена",
-        description: "Агент ќе ве контактира наскоро.",
+        title: "Успешно!",
+        description: "Ви благодариме! Ќе ве контактираме наскоро.",
       });
 
       setFormData(initialFormState);
-      setOpen(false);
+      
+      // Close the popup after 2 seconds
+      setTimeout(() => {
+        setOpen(false);
+      }, 2000);
     } catch (error: any) {
       toast({
         position: "center",
@@ -163,95 +184,70 @@ export function QuickOrderDialog({ product, trigger, defaultOpen = false }: Quic
             onSubmit={handleSubmit}
             className="mt-6 space-y-4 w-full text-center"
           >
-            {/* Quantity */}
-            <div className="grid gap-1.5 justify-center">
-              <Label
-                htmlFor={qtyId}
-                className="text-xs text-muted-foreground text-center"
-              >
-                Количина
-              </Label>
-              <div className="flex items-center justify-center gap-2">
-                <Button
-                  type="button"
-                  variant="outline"
-                  className="h-9 w-9 rounded-lg"
-                  onClick={() =>
-                    setFormData((p) => ({
-                      ...p,
-                      quantity: Math.max(1, p.quantity - 1),
-                    }))
-                  }
-                  aria-label="Намали количина"
-                >
-                  <Minus className="h-4 w-4" />
-                </Button>
-
-                <Input
-                  id={qtyId}
-                  inputMode="numeric"
-                  pattern="^[1-9]\d*$"
-                  value={String(formData.quantity)}
-                  onChange={(e) =>
-                    setFormData((p) => ({
-                      ...p,
-                      quantity: Math.max(
-                        1,
-                        parseInt(e.target.value || "1", 10) || 1
-                      ),
-                    }))
-                  }
-                  className="h-9 w-16 text-center rounded-lg text-center"
-                />
-
-                <Button
-                  type="button"
-                  variant="outline"
-                  className="h-9 w-9 rounded-lg"
-                  onClick={() =>
-                    setFormData((p) => ({ ...p, quantity: p.quantity + 1 }))
-                  }
-                  aria-label="Зголеми количина"
-                >
-                  <Plus className="h-4 w-4" />
-                </Button>
-              </div>
-            </div>
-
-            {/* Name */}
+            {/* Име */}
             <div className="grid gap-1.5 text-left">
-              <Label htmlFor={fullNameId}>Име и презиме *</Label>
+              <Label htmlFor={imeId}>Име *</Label>
               <Input
-                id={fullNameId}
-                autoComplete="name"
-                placeholder="Пример: Ана Анастасова"
+                id={imeId}
+                autoComplete="given-name"
+                placeholder="Пример: Ана"
                 className="h-11 rounded-xl"
-                value={formData.fullName}
+                value={formData.ime}
                 onChange={(e) =>
-                  setFormData((p) => ({ ...p, fullName: e.target.value }))
+                  setFormData((p) => ({ ...p, ime: e.target.value }))
                 }
                 required
               />
             </div>
 
-            {/* Phone */}
+            {/* Презиме */}
             <div className="grid gap-1.5 text-left">
-              <Label htmlFor={phoneId}>Телефон *</Label>
+              <Label htmlFor={prezimeId}>Презиме *</Label>
               <Input
-                id={phoneId}
+                id={prezimeId}
+                autoComplete="family-name"
+                placeholder="Пример: Анастасова"
+                className="h-11 rounded-xl"
+                value={formData.prezime}
+                onChange={(e) =>
+                  setFormData((p) => ({ ...p, prezime: e.target.value }))
+                }
+                required
+              />
+            </div>
+
+            {/* Телефон */}
+            <div className="grid gap-1.5 text-left">
+              <Label htmlFor={telefonId}>Телефон *</Label>
+              <Input
+                id={telefonId}
                 autoComplete="tel"
                 inputMode="numeric"
                 placeholder="07X XXX XXX"
                 className="h-11 rounded-xl"
-                value={formData.phone}
+                value={formData.telefon}
                 onChange={(e) =>
                   setFormData((p) => ({
                     ...p,
-                    phone: formatPhone(e.target.value),
+                    telefon: e.target.value,
                   }))
                 }
-                pattern="^0\d{2}\s\d{3}\s\d{3}$"
-                title="Внесете телефон во формат 07X XXX XXX"
+                required
+              />
+            </div>
+
+            {/* Град */}
+            <div className="grid gap-1.5 text-left">
+              <Label htmlFor={gradId}>Град *</Label>
+              <Input
+                id={gradId}
+                autoComplete="address-level2"
+                placeholder="Пример: Скопје"
+                className="h-11 rounded-xl"
+                value={formData.grad}
+                onChange={(e) =>
+                  setFormData((p) => ({ ...p, grad: e.target.value }))
+                }
                 required
               />
             </div>
@@ -275,12 +271,12 @@ export function QuickOrderDialog({ product, trigger, defaultOpen = false }: Quic
                   Испраќање…
                 </>
               ) : (
-                "Потврди нарачка"
+                "Пошали"
               )}
             </Button>
 
             <p className="text-[11px] text-muted-foreground text-center">
-              Нема онлајн плаќање. Ќе ве контактираме за потврда.
+              Ќе ве контактираме за потврда.
             </p>
           </form>
         </div>
