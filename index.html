@@ -36,14 +36,9 @@
             <input type="text" id="prezime" name="prezime" placeholder="Пример: Анастасова" required style="width:100%; padding:11px; border:1px solid #ddd; border-radius:8px; font-size:14px; box-sizing:border-box;">
           </div>
 
-          <div style="margin-bottom:16px;">
+          <div style="margin-bottom:24px;">
             <label for="telefon" style="display:block; font-size:14px; font-weight:500; margin-bottom:6px;">Телефон *</label>
             <input type="tel" id="telefon" name="telefon" placeholder="07X XXX XXX" required style="width:100%; padding:11px; border:1px solid #ddd; border-radius:8px; font-size:14px; box-sizing:border-box;">
-          </div>
-
-          <div style="margin-bottom:24px;">
-            <label for="grad" style="display:block; font-size:14px; font-weight:500; margin-bottom:6px;">Град *</label>
-            <input type="text" id="grad" name="grad" placeholder="Пример: Скопје" required style="width:100%; padding:11px; border:1px solid #ddd; border-radius:8px; font-size:14px; box-sizing:border-box;">
           </div>
 
           <button type="submit" style="width:100%; padding:11px; background-color:#0065ff; color:white; border:none; border-radius:8px; font-size:16px; font-weight:600; cursor:pointer; transition:background-color 0.2s;">Нарачај</button>
@@ -83,9 +78,8 @@
         const ime = document.getElementById('ime').value.trim();
         const prezime = document.getElementById('prezime').value.trim();
         const telefon = document.getElementById('telefon').value.trim();
-        const grad = document.getElementById('grad').value.trim();
 
-        if (!ime || !prezime || !telefon || !grad) {
+        if (!ime || !prezime || !telefon) {
           alert('Внесете сите полиња.');
           return;
         }
@@ -101,8 +95,7 @@
               body: JSON.stringify({
                 ime,
                 prezime,
-                telefon,
-                grad
+                telefon
               })
             }
           );

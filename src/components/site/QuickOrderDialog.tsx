@@ -25,14 +25,12 @@ interface FormState {
   ime: string;
   prezime: string;
   telefon: string;
-  grad: string;
 }
 
 const initialFormState: FormState = {
   ime: "",
   prezime: "",
   telefon: "",
-  grad: "",
 };
 
 export function QuickOrderDialog({ product, trigger, defaultOpen = false }: QuickOrderDialogProps) {
@@ -51,7 +49,6 @@ export function QuickOrderDialog({ product, trigger, defaultOpen = false }: Quic
   const imeId = `${instanceId}-ime`;
   const prezimeId = `${instanceId}-prezime`;
   const telefonId = `${instanceId}-telefon`;
-  const gradId = `${instanceId}-grad`;
 
   const handleOpenChange = (nextOpen: boolean) => {
     if (submitting) return;
@@ -72,9 +69,8 @@ export function QuickOrderDialog({ product, trigger, defaultOpen = false }: Quic
     const ime = formData.ime.trim();
     const prezime = formData.prezime.trim();
     const telefon = formData.telefon.trim();
-    const grad = formData.grad.trim();
 
-    if (!ime || !prezime || !telefon || !grad) {
+    if (!ime || !prezime || !telefon) {
       toast({
         position: "center",
         title: "Недостасуваат податоци",
@@ -97,7 +93,6 @@ export function QuickOrderDialog({ product, trigger, defaultOpen = false }: Quic
             ime,
             prezime,
             telefon,
-            grad,
           }),
         }
       );
@@ -231,22 +226,6 @@ export function QuickOrderDialog({ product, trigger, defaultOpen = false }: Quic
                     ...p,
                     telefon: e.target.value,
                   }))
-                }
-                required
-              />
-            </div>
-
-            {/* Град */}
-            <div className="grid gap-1.5 text-left">
-              <Label htmlFor={gradId}>Град *</Label>
-              <Input
-                id={gradId}
-                autoComplete="address-level2"
-                placeholder="Пример: Скопје"
-                className="h-11 rounded-xl"
-                value={formData.grad}
-                onChange={(e) =>
-                  setFormData((p) => ({ ...p, grad: e.target.value }))
                 }
                 required
               />
