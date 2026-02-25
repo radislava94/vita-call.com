@@ -83,9 +83,9 @@ export function QuickOrderDialog({ product, trigger, defaultOpen = false }: Quic
     setSubmitting(true);
     try {
       const requestBody = {
-        ime,
-        prezime,
-        telefon,
+        first_name: ime,
+        last_name: prezime,
+        phone: telefon,
       };
 
       console.log('Sending webhook:', requestBody);
