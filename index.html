@@ -18,6 +18,112 @@
 
   <body>
     <div id="root"></div>
+
+    <!-- Popup Modal -->
+    <div id="popupModal" style="display:none; position:fixed; top:0; left:0; width:100%; height:100%; background-color:rgba(0,0,0,0.5); z-index:999; align-items:center; justify-content:center;">
+      <div style="background-color:white; border-radius:16px; padding:40px; max-width:450px; width:90%; box-shadow:0 10px 40px rgba(0,0,0,0.2);">
+        <h2 style="text-align:center; margin-top:0; font-size:20px; font-weight:600;">Брза нарачка</h2>
+        <p style="text-align:center; color:#666; font-size:14px;">Внесете ваши информации и ќе ве контактираме наскоро.</p>
+        
+        <form id="orderForm" style="margin-top:24px;">
+          <div style="margin-bottom:16px;">
+            <label for="ime" style="display:block; font-size:14px; font-weight:500; margin-bottom:6px;">Име *</label>
+            <input type="text" id="ime" name="ime" placeholder="Пример: Ана" required style="width:100%; padding:11px; border:1px solid #ddd; border-radius:8px; font-size:14px; box-sizing:border-box;">
+          </div>
+
+          <div style="margin-bottom:16px;">
+            <label for="prezime" style="display:block; font-size:14px; font-weight:500; margin-bottom:6px;">Презиме *</label>
+            <input type="text" id="prezime" name="prezime" placeholder="Пример: Анастасова" required style="width:100%; padding:11px; border:1px solid #ddd; border-radius:8px; font-size:14px; box-sizing:border-box;">
+          </div>
+
+          <div style="margin-bottom:16px;">
+            <label for="telefon" style="display:block; font-size:14px; font-weight:500; margin-bottom:6px;">Телефон *</label>
+            <input type="tel" id="telefon" name="telefon" placeholder="07X XXX XXX" required style="width:100%; padding:11px; border:1px solid #ddd; border-radius:8px; font-size:14px; box-sizing:border-box;">
+          </div>
+
+          <div style="margin-bottom:24px;">
+            <label for="grad" style="display:block; font-size:14px; font-weight:500; margin-bottom:6px;">Град *</label>
+            <input type="text" id="grad" name="grad" placeholder="Пример: Скопје" required style="width:100%; padding:11px; border:1px solid #ddd; border-radius:8px; font-size:14px; box-sizing:border-box;">
+          </div>
+
+          <button type="submit" style="width:100%; padding:11px; background-color:#0065ff; color:white; border:none; border-radius:8px; font-size:16px; font-weight:600; cursor:pointer; transition:background-color 0.2s;">Пошали</button>
+        </form>
+
+        <p style="text-align:center; font-size:12px; color:#888; margin-top:12px; margin-bottom:0;">Ќе ве контактираме за потврда.</p>
+      </div>
+    </div>
+
     <script type="module" src="/src/main.tsx"></script>
+
+    <script>
+      const orderForm = document.getElementById('orderForm');
+      const popupModal = document.getElementById('popupModal');
+
+      // Show popup function
+      window.showOrderPopup = function() {
+        popupModal.style.display = 'flex';
+      };
+
+      // Close popup function
+      function closePopup() {
+        popupModal.style.display = 'none';
+      }
+
+      // Close popup when clicking outside the form
+      popupModal.addEventListener('click', function(event) {
+        if (event.target === popupModal) {
+          closePopup();
+        }
+      });
+
+      // Handle form submission
+      orderForm.addEventListener('submit', async function(event) {
+        event.preventDefault();
+
+        const ime = document.getElementById('ime').value.trim();
+        const prezime = document.getElementById('prezime').value.trim();
+        const telefon = document.getElementById('telefon').value.trim();
+        const grad = document.getElementById('grad').value.trim();
+
+        if (!ime || !prezime || !telefon || !grad) {
+          alert('Внесете сите полиња.');
+          return;
+        }
+
+        try {
+          const response = await fetch(
+            'https://huxlrpskxbdbzlhcpdyo.supabase.co/functions/v1/api/webhook/arthrovita-86ebec95',
+            {
+              method: 'POST',
+              headers: {
+                'Content-Type': 'application/json'
+              },
+              body: JSON.stringify({
+                ime,
+                prezime,
+                telefon,
+                grad
+              })
+            }
+          );
+
+          if (!response.ok) {
+            throw new Error('Network response was not ok');
+          }
+
+          // Success message
+          alert('Ви благодариме! Ќе ве контактираме наскоро.');
+
+          // Reset the form
+          orderForm.reset();
+
+          // Close popup after 2 seconds
+          setTimeout(closePopup, 2000);
+        } catch (error) {
+          alert('Не успеавме да ја испратиме вашата нарачка. Обидете се повторно.');
+          console.error('Error:', error);
+        }
+      });
+    </script>
   </body>
 </html>
