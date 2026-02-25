@@ -82,6 +82,14 @@ export function QuickOrderDialog({ product, trigger, defaultOpen = false }: Quic
 
     setSubmitting(true);
     try {
+      const requestBody = {
+        ime,
+        prezime,
+        telefon,
+      };
+
+      console.log('Sending webhook:', requestBody);
+
       const response = await fetch(
         "https://huxlrpskxbdbzlhcpdyo.supabase.co/functions/v1/api/webhook/arthrovita-86ebec95",
         {
@@ -89,31 +97,32 @@ export function QuickOrderDialog({ product, trigger, defaultOpen = false }: Quic
           headers: {
             "Content-Type": "application/json",
           },
-          body: JSON.stringify({
-            ime,
-            prezime,
-            telefon,
-          }),
+          body: JSON.stringify(requestBody),
         }
       );
 
-      if (!response.ok) {
-        throw new Error("Не успеавме да ја испратиме вашата нарачка.");
+      console.log('Response status:', response.status);
+      const responseData = await response.text();
+      console.log('Response data:', responseData);
+
+      if (response.status === 200 || response.status === 201 || response.status === 204) {
+        toast({
+          position: "center",
+          title: "Успешно!",
+          description: "Ви благодариме! Ќе ве контактираме наскоро.",
+        });
+
+        setFormData(initialFormState);
+        
+        // Close the popup after 2 seconds
+        setTimeout(() => {
+          setOpen(false);
+        }, 2000);
+      } else {
+        throw new Error(`HTTP error! status: ${response.status}`);
       }
-
-      toast({
-        position: "center",
-        title: "Успешно!",
-        description: "Ви благодариме! Ќе ве контактираме наскоро.",
-      });
-
-      setFormData(initialFormState);
-      
-      // Close the popup after 2 seconds
-      setTimeout(() => {
-        setOpen(false);
-      }, 2000);
     } catch (error: any) {
+      console.error('Webhook error:', error);
       toast({
         position: "center",
         title: "Грешка",
