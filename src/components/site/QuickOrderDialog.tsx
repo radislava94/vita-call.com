@@ -83,8 +83,7 @@ export function QuickOrderDialog({ product, trigger, defaultOpen = false }: Quic
     setSubmitting(true);
     try {
       const requestBody = {
-        first_name: ime,
-        last_name: prezime,
+        name: `${ime} ${prezime}`,
         phone: telefon,
       };
 
