@@ -271,7 +271,7 @@ export function QuickOrderDialog({ product, trigger, defaultOpen = false }: Quic
                   Испраќање…
                 </>
               ) : (
-                "Пошали"
+                "Нарачај"
               )}
             </Button>
 

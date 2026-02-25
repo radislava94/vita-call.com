@@ -4,6 +4,7 @@ import { useQuery } from "@tanstack/react-query";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardFooter } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
+import { QuickOrderDialog } from "@/components/site/QuickOrderDialog";
 import { fetchProducts, type Product } from "@/lib/api";
 import { formatEUR } from "@/lib/utils";
 import { mockProducts } from "@/assets/products/mockProducts";
@@ -133,12 +134,14 @@ export function FeaturedGrid() {
                   </CardContent>
 
                   <CardFooter className="p-4 pt-0 flex gap-2">
-                    <Button
-                      asChild
-                      className="flex-1 bg-[#0052cc] hover:bg-[#0065ff] text-white font-semibold"
-                    >
-                      <Link to={`/products/${product.slug}`}>Нарачај</Link>
-                    </Button>
+                    <QuickOrderDialog
+                      product={product}
+                      trigger={
+                        <Button className="flex-1 bg-[#0052cc] hover:bg-[#0065ff] text-white font-semibold">
+                          Нарачај
+                        </Button>
+                      }
+                    />
                     <Button
                       asChild
                       variant="outline"
