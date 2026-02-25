@@ -55,14 +55,12 @@ export function Navbar() {
           {/* Brand */}
           <div className="flex-shrink-0">
             <Link to="/" className="flex items-center space-x-2">
-              <div className="text-2xl font-bold text-primary font-[var(--font-script)]">
-                <Link to="/" className="relative flex items-center justify-center group">
-                  <img
-                    src={VitaCall_Logo}
-                    alt="VitaCall Logo"
-                    className="h-14 sm:h-14 w-auto object-contain transition-transform duration-300 ease-out group-hover:scale-110 transform-gpu will-change-transform"
-                  />
-                </Link>
+              <div className="text-2xl font-bold text-primary font-[var(--font-script)] relative flex items-center justify-center group">
+                <img
+                  src={VitaCall_Logo}
+                  alt="VitaCall Logo"
+                  className="h-14 sm:h-14 w-auto object-contain transition-transform duration-300 ease-out group-hover:scale-110 transform-gpu will-change-transform"
+                />
               </div>
             </Link>
           </div>
