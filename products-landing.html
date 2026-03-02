@@ -1,0 +1,864 @@
+<!DOCTYPE html>
+<html lang="mk">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ArthroVita - Премиум Производи за Здравје</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        :root {
+            --primary: #0065ff;
+            --primary-hover: #0055e0;
+            --primary-dark: #0047c0;
+            --text-dark: #1a1a1a;
+            --text-light: #666;
+            --bg-light: #f8f9fa;
+            --border-color: #e0e0e0;
+            --success: #10b981;
+            --spacing-sm: 16px;
+            --spacing-md: 32px;
+            --spacing-lg: 60px;
+            --spacing-xl: 100px;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
+            line-height: 1.6;
+            color: var(--text-dark);
+            background: #fff;
+            overflow-x: hidden;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 var(--spacing-md);
+        }
+
+        /* HERO SECTION */
+        .hero {
+            background: linear-gradient(135deg, var(--primary) 0%, #0052cc 100%);
+            color: white;
+            padding: var(--spacing-xl) var(--spacing-md);
+            text-align: center;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            min-height: 600px;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .hero::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            right: -10%;
+            width: 600px;
+            height: 600px;
+            background: rgba(255,255,255,0.1);
+            border-radius: 50%;
+            animation: float 6s ease-in-out infinite;
+        }
+
+        @keyframes float {
+            0%, 100% { transform: translateY(0px); }
+            50% { transform: translateY(20px); }
+        }
+
+        .hero-content {
+            position: relative;
+            z-index: 2;
+            max-width: 800px;
+        }
+
+        .hero h1 {
+            font-size: clamp(32px, 5vw, 56px);
+            font-weight: 800;
+            margin-bottom: var(--spacing-md);
+            line-height: 1.2;
+            letter-spacing: -1px;
+        }
+
+        .hero .subheadline {
+            font-size: clamp(18px, 2.5vw, 24px);
+            font-weight: 300;
+            margin-bottom: var(--spacing-lg);
+            opacity: 0.95;
+        }
+
+        .btn-primary {
+            background: white;
+            color: var(--primary);
+            padding: 16px 48px;
+            border: none;
+            border-radius: 50px;
+            font-size: 16px;
+            font-weight: 700;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            display: inline-block;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.2);
+        }
+
+        .btn-primary:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 15px 40px rgba(0,0,0,0.3);
+        }
+
+        .btn-primary.order-btn {
+            background: white;
+            color: var(--primary);
+        }
+
+        /* PROBLEM SOLUTION SECTION */
+        .problem-solution {
+            padding: var(--spacing-xl) var(--spacing-md);
+            background: var(--bg-light);
+        }
+
+        .section-title {
+            font-size: clamp(28px, 4vw, 42px);
+            font-weight: 800;
+            margin-bottom: var(--spacing-lg);
+            text-align: center;
+            color: var(--text-dark);
+        }
+
+        .section-subtitle {
+            text-align: center;
+            color: var(--text-light);
+            font-size: 18px;
+            margin-bottom: var(--spacing-lg);
+            max-width: 600px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+
+        .problem-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: var(--spacing-lg);
+            align-items: center;
+            margin-bottom: var(--spacing-xl);
+        }
+
+        .problem-text h3 {
+            font-size: 28px;
+            margin-bottom: var(--spacing-md);
+            color: var(--text-dark);
+        }
+
+        .problem-item {
+            display: flex;
+            gap: var(--spacing-md);
+            margin-bottom: var(--spacing-md);
+        }
+
+        .problem-icon {
+            width: 50px;
+            height: 50px;
+            background: var(--primary);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-size: 24px;
+            flex-shrink: 0;
+        }
+
+        .problem-item p {
+            color: var(--text-light);
+            font-size: 16px;
+            line-height: 1.8;
+        }
+
+        .problem-image {
+            background: linear-gradient(135deg, var(--primary) 0%, #0052cc 100%);
+            border-radius: 20px;
+            height: 400px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-size: 18px;
+            font-weight: 600;
+        }
+
+        /* PRODUCTS SECTION */
+        .products-section {
+            padding: var(--spacing-xl) var(--spacing-md);
+        }
+
+        .products-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+            gap: var(--spacing-md);
+            margin-top: var(--spacing-lg);
+        }
+
+        .product-card {
+            background: white;
+            border: 1px solid var(--border-color);
+            border-radius: 16px;
+            padding: var(--spacing-md);
+            transition: all 0.3s ease;
+            display: flex;
+            flex-direction: column;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .product-card:hover {
+            transform: translateY(-8px);
+            box-shadow: 0 20px 40px rgba(0,0,0,0.1);
+            border-color: var(--primary);
+        }
+
+        .product-badge {
+            position: absolute;
+            top: var(--spacing-md);
+            right: var(--spacing-md);
+            background: var(--success);
+            color: white;
+            padding: 8px 16px;
+            border-radius: 50px;
+            font-size: 12px;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        .product-image {
+            width: 100%;
+            height: 240px;
+            background: linear-gradient(135deg, var(--bg-light) 0%, #f0f0f0 100%);
+            border-radius: 12px;
+            margin-bottom: var(--spacing-md);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 80px;
+        }
+
+        .product-title {
+            font-size: 18px;
+            font-weight: 700;
+            margin-bottom: 8px;
+            color: var(--text-dark);
+        }
+
+        .product-description {
+            color: var(--text-light);
+            font-size: 14px;
+            line-height: 1.6;
+            margin-bottom: var(--spacing-md);
+            flex-grow: 1;
+        }
+
+        .product-price-section {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            margin-bottom: var(--spacing-md);
+        }
+
+        .product-price {
+            font-size: 24px;
+            font-weight: 800;
+            color: var(--primary);
+        }
+
+        .product-original-price {
+            font-size: 14px;
+            color: var(--text-light);
+            text-decoration: line-through;
+        }
+
+        .product-button {
+            background: var(--primary);
+            color: white;
+            padding: 12px 24px;
+            border: none;
+            border-radius: 12px;
+            font-size: 14px;
+            font-weight: 700;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            width: 100%;
+        }
+
+        .product-button:hover {
+            background: var(--primary-hover);
+            transform: scale(1.02);
+        }
+
+        /* TRUST SECTION */
+        .trust-section {
+            padding: var(--spacing-xl) var(--spacing-md);
+            background: var(--bg-light);
+        }
+
+        .trust-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: var(--spacing-lg);
+            margin-top: var(--spacing-lg);
+        }
+
+        .trust-item {
+            background: white;
+            padding: var(--spacing-lg);
+            border-radius: 16px;
+            text-align: center;
+            border: 1px solid var(--border-color);
+        }
+
+        .trust-icon {
+            font-size: 48px;
+            margin-bottom: var(--spacing-md);
+        }
+
+        .trust-title {
+            font-size: 18px;
+            font-weight: 700;
+            margin-bottom: 8px;
+            color: var(--text-dark);
+        }
+
+        .trust-text {
+            color: var(--text-light);
+            font-size: 14px;
+        }
+
+        /* TESTIMONIALS SECTION */
+        .testimonials-section {
+            padding: var(--spacing-xl) var(--spacing-md);
+        }
+
+        .testimonials-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: var(--spacing-lg);
+            margin-top: var(--spacing-lg);
+        }
+
+        .testimonial-card {
+            background: white;
+            border: 1px solid var(--border-color);
+            border-radius: 16px;
+            padding: var(--spacing-lg);
+            display: flex;
+            flex-direction: column;
+        }
+
+        .testimonial-stars {
+            color: #fbbf24;
+            font-size: 16px;
+            margin-bottom: 12px;
+            letter-spacing: 4px;
+        }
+
+        .testimonial-text {
+            color: var(--text-light);
+            font-size: 16px;
+            line-height: 1.8;
+            margin-bottom: var(--spacing-md);
+            flex-grow: 1;
+            font-style: italic;
+        }
+
+        .testimonial-author {
+            font-weight: 700;
+            color: var(--text-dark);
+            margin-bottom: 4px;
+        }
+
+        .testimonial-city {
+            color: var(--text-light);
+            font-size: 14px;
+        }
+
+        /* FINAL CTA SECTION */
+        .final-cta {
+            background: linear-gradient(135deg, var(--primary) 0%, #0052cc 100%);
+            color: white;
+            padding: var(--spacing-xl) var(--spacing-md);
+            text-align: center;
+        }
+
+        .final-cta h2 {
+            font-size: clamp(28px, 4vw, 42px);
+            margin-bottom: var(--spacing-md);
+            font-weight: 800;
+        }
+
+        .final-cta p {
+            font-size: 18px;
+            margin-bottom: var(--spacing-lg);
+            opacity: 0.95;
+            max-width: 600px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+
+        /* POPUP MODAL */
+        #popupModal {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0,0,0,0.5);
+            z-index: 999;
+            display: none;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .modal-content {
+            background-color: white;
+            border-radius: 16px;
+            padding: 40px;
+            max-width: 450px;
+            width: 90%;
+            box-shadow: 0 10px 40px rgba(0,0,0,0.2);
+        }
+
+        .modal-close {
+            float: right;
+            font-size: 28px;
+            font-weight: bold;
+            color: #999;
+            cursor: pointer;
+            border: none;
+            background: none;
+            padding: 0;
+            width: 30px;
+            height: 30px;
+        }
+
+        .modal-close:hover {
+            color: var(--text-dark);
+        }
+
+        .modal-title {
+            text-align: center;
+            font-size: 20px;
+            font-weight: 600;
+            margin-top: 20px;
+            margin-bottom: 10px;
+            color: var(--text-dark);
+        }
+
+        .modal-subtitle {
+            text-align: center;
+            color: var(--text-light);
+            font-size: 14px;
+            margin-bottom: 24px;
+        }
+
+        .form-group {
+            margin-bottom: 16px;
+        }
+
+        .form-label {
+            display: block;
+            font-size: 14px;
+            font-weight: 500;
+            margin-bottom: 6px;
+            color: var(--text-dark);
+        }
+
+        .form-input {
+            width: 100%;
+            padding: 11px;
+            border: 1px solid var(--border-color);
+            border-radius: 8px;
+            font-size: 14px;
+            font-family: inherit;
+            transition: border-color 0.3s ease;
+        }
+
+        .form-input:focus {
+            outline: none;
+            border-color: var(--primary);
+            box-shadow: 0 0 0 3px rgba(0,101,255,0.1);
+        }
+
+        .modal-button {
+            width: 100%;
+            padding: 11px;
+            background-color: var(--primary);
+            color: white;
+            border: none;
+            border-radius: 8px;
+            font-size: 16px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: background-color 0.2s;
+            margin-top: 16px;
+        }
+
+        .modal-button:hover {
+            background-color: var(--primary-hover);
+        }
+
+        .modal-footer {
+            text-align: center;
+            font-size: 12px;
+            color: var(--text-light);
+            margin-top: 12px;
+        }
+
+        /* RESPONSIVE */
+        @media (max-width: 768px) {
+            :root {
+                --spacing-lg: 40px;
+                --spacing-xl: 60px;
+            }
+
+            .problem-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .products-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .hero {
+                min-height: 500px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- HERO SECTION -->
+    <section class="hero">
+        <div class="hero-content">
+            <h1>Ваше здравје е наша приоритет</h1>
+            <p class="subheadline">Премиум производи за здравле и долговечност. Натура. Наука. Резултати.</p>
+            <button class="btn-primary order-btn" data-product="basic">Нарачај сега</button>
+        </div>
+    </section>
+
+    <!-- PROBLEM SOLUTION SECTION -->
+    <section class="problem-solution">
+        <div class="container">
+            <h2 class="section-title">Защо да избирате ArthroVita?</h2>
+            <p class="section-subtitle">Ние нудиме решения за вашите здравствени потреби со проверени и натурални производи</p>
+
+            <div class="problem-grid">
+                <div class="problem-text">
+                    <h3>Наши придобивки</h3>
+                    
+                    <div class="problem-item">
+                        <div class="problem-icon">✓</div>
+                        <div>
+                            <p><strong>Проверена формула</strong> - Секој производ е направен од врвни ингредиенти со научна поддршка</p>
+                        </div>
+                    </div>
+
+                    <div class="problem-item">
+                        <div class="problem-icon">✓</div>
+                        <div>
+                            <p><strong>Безбедност и квалитет</strong> - Сите производи поминуваат строги тестови за квалитет</p>
+                        </div>
+                    </div>
+
+                    <div class="problem-item">
+                        <div class="problem-icon">✓</div>
+                        <div>
+                            <p><strong>Брз резултат</strong> - Заболката може да се олекша веќе по неколку недели</p>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="problem-image">
+                    🏥 Здравје и благостояние
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- PRODUCTS SECTION -->
+    <section class="products-section">
+        <div class="container">
+            <h2 class="section-title">Нашите премиум производи</h2>
+            <p class="section-subtitle">Избирајте од нашата сертификирана колекција на здравствени суплементи</p>
+
+            <div class="products-grid">
+                <!-- PRODUCT 1 -->
+                <div class="product-card">
+                    <span class="product-badge">Најпопуларен</span>
+                    <div class="product-image">💊</div>
+                    <h3 class="product-title">ArthroVita – Поддршка за зглобови</h3>
+                    <p class="product-description">Формула за подмачкување и флексибилност на зглобови со глукозамин, хондроитин и МСМ.</p>
+                    <div class="product-price-section">
+                        <span class="product-price">2.400 MKD</span>
+                        <span class="product-original-price">4.800 MKD</span>
+                    </div>
+                    <button class="product-button order-btn" data-product="arthrovita">Нарачај сега</button>
+                </div>
+
+                <!-- PRODUCT 2 -->
+                <div class="product-card">
+                    <div class="product-image">❤️</div>
+                    <h3 class="product-title">CardiVita</h3>
+                    <p class="product-description">Поддршка за кардиоваскуларно здравје со CoQ10, магнезиум и Б-витамини.</p>
+                    <div class="product-price-section">
+                        <span class="product-price">2.400 MKD</span>
+                        <span class="product-original-price">4.800 MKD</span>
+                    </div>
+                    <button class="product-button order-btn" data-product="cardivita">Нарачај сега</button>
+                </div>
+
+                <!-- PRODUCT 3 -->
+                <div class="product-card">
+                    <div class="product-image">🩺</div>
+                    <h3 class="product-title">DiaVita – Рамнотежа на шеќер</h3>
+                    <p class="product-description">Билна поддршка за нормални нивоа на гликоза со цимет и берберин.</p>
+                    <div class="product-price-section">
+                        <span class="product-price">2.400 MKD</span>
+                        <span class="product-original-price">4.800 MKD</span>
+                    </div>
+                    <button class="product-button order-btn" data-product="diavita">Нарачај сега</button>
+                </div>
+
+                <!-- PRODUCT 4 -->
+                <div class="product-card">
+                    <div class="product-image">👁️</div>
+                    <h3 class="product-title">OptiVita – Визија & очи</h3>
+                    <p class="product-description">Лутеин, зеаксантин и боровинка за заштита и удобност на очите.</p>
+                    <div class="product-price-section">
+                        <span class="product-price">2.400 MKD</span>
+                        <span class="product-original-price">4.800 MKD</span>
+                    </div>
+                    <button class="product-button order-btn" data-product="optivita">Нарачај сега</button>
+                </div>
+
+                <!-- PRODUCT 5 -->
+                <div class="product-card">
+                    <div class="product-image">🛡️</div>
+                    <h3 class="product-title">ProVita – Имунитет</h3>
+                    <p class="product-description">Цинк, витамин C и D3 за дневна одбрана и енергија.</p>
+                    <div class="product-price-section">
+                        <span class="product-price">2.400 MKD</span>
+                        <span class="product-original-price">4.800 MKD</span>
+                    </div>
+                    <button class="product-button order-btn" data-product="provita">Нарачај сега</button>
+                </div>
+
+                <!-- PRODUCT 6 -->
+                <div class="product-card">
+                    <div class="product-image">⚡</div>
+                    <h3 class="product-title">VitaFit – Дневен мултивитамин</h3>
+                    <p class="product-description">Комплет од 23 нутриенти за тонус и виталност.</p>
+                    <div class="product-price-section">
+                        <span class="product-price">2.400 MKD</span>
+                        <span class="product-original-price">4.800 MKD</span>
+                    </div>
+                    <button class="product-button order-btn" data-product="vitafit">Нарачај сега</button>
+                </div>
+
+                <!-- PRODUCT 7 -->
+                <div class="product-card">
+                    <div class="product-image">💪</div>
+                    <h3 class="product-title">Stallion Power – Машка енергија</h3>
+                    <p class="product-description">Природна формула за сила и издржливост со мака и цинк.</p>
+                    <div class="product-price-section">
+                        <span class="product-price">2.400 MKD</span>
+                        <span class="product-original-price">4.800 MKD</span>
+                    </div>
+                    <button class="product-button order-btn" data-product="stallion-power">Нарачај сега</button>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- TRUST SECTION -->
+    <section class="trust-section">
+        <div class="container">
+            <h2 class="section-title">Зошто нам верувате?</h2>
+
+            <div class="trust-grid">
+                <div class="trust-item">
+                    <div class="trust-icon">🚚</div>
+                    <h3 class="trust-title">Бесплатна достава</h3>
+                    <p class="trust-text">Бесплатна доставка на сите нарачки во целата земја</p>
+                </div>
+
+                <div class="trust-item">
+                    <div class="trust-icon">💳</div>
+                    <h3 class="trust-title">Плаќање при достава</h3>
+                    <p class="trust-text">Плаќајте удобно кога ќе го примите вашиот производ</p>
+                </div>
+
+                <div class="trust-item">
+                    <div class="trust-icon">✅</div>
+                    <h3 class="trust-title">12 месеци гаранција</h3>
+                    <p class="trust-text">Полна гаранција за задовољство или назад парите</p>
+                </div>
+
+                <div class="trust-item">
+                    <div class="trust-icon">☎️</div>
+                    <h3 class="trust-title">Поддршка 24/7</h3>
+                    <p class="trust-text">Нашиот тим е секогаш подготвен да ви помогне</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- TESTIMONIALS SECTION -->
+    <section class="testimonials-section">
+        <div class="container">
+            <h2 class="section-title">Вашите искуства</h2>
+            <p class="section-subtitle">Илјадници задоволни клиенти веќе го користат ArthroVita</p>
+
+            <div class="testimonials-grid">
+                <div class="testimonial-card">
+                    <div class="testimonial-stars">★★★★★</div>
+                    <p class="testimonial-text">"Одличен производ! По два месеца од користење на ArthroVita, болката во зглобовите ми значително се намали. Силно препорачувам!"</p>
+                    <p class="testimonial-author">Марина Костовска</p>
+                    <p class="testimonial-city">Скопје</p>
+                </div>
+
+                <div class="testimonial-card">
+                    <div class="testimonial-stars">★★★★★</div>
+                    <p class="testimonial-text">"Не само што производите се квалитетни, туку и сервисот е неверојатен. Брза доставка и пријателско раководство. Браво!"</p>
+                    <p class="testimonial-author">Јован Јовановски</p>
+                    <p class="testimonial-city">Битола</p>
+                </div>
+
+                <div class="testimonial-card">
+                    <div class="testimonial-stars">★★★★★</div>
+                    <p class="testimonial-text">"Наконечно нашав решение за моите здравствени проблеми. ProVita ми го зголеми енергијата и сум много задоволна со резултатите!"</p>
+                    <p class="testimonial-author">Елена Трајковска</p>
+                    <p class="testimonial-city">Охрид</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- FINAL CTA SECTION -->
+    <section class="final-cta">
+        <div class="container">
+            <h2>Готови ли сте да го промените вашето здравје?</h2>
+            <p>Не чекајте повеќе! Нарачајте денес и добијте 50% попуст на вашата прва нарачка</p>
+            <button class="btn-primary order-btn" data-product="basic">Нарачај сега</button>
+        </div>
+    </section>
+
+    <!-- POPUP MODAL -->
+    <div id="popupModal">
+        <div class="modal-content">
+            <button class="modal-close" onclick="closePopup()">&times;</button>
+            <h2 class="modal-title">Брза нарачка</h2>
+            <p class="modal-subtitle">Внесете ваши информации и ќе ве контактираме наскоро.</p>
+
+            <form id="orderForm">
+                <div class="form-group">
+                    <label for="ime" class="form-label">Име *</label>
+                    <input type="text" id="ime" placeholder="Пример: Ана" required class="form-input">
+                </div>
+
+                <div class="form-group">
+                    <label for="prezime" class="form-label">Презиме *</label>
+                    <input type="text" id="prezime" placeholder="Пример: Анастасова" required class="form-input">
+                </div>
+
+                <div class="form-group">
+                    <label for="telefon" class="form-label">Телефон *</label>
+                    <input type="text" id="telefon" placeholder="Пример: 07X XXX XXX" required class="form-input">
+                </div>
+
+                <button type="submit" class="modal-button">Нарачај сега</button>
+            </form>
+
+            <p class="modal-footer">Ќе ве контактираме за потврда.</p>
+        </div>
+    </div>
+
+    <script>
+        const popupModal = document.getElementById('popupModal');
+        const orderForm = document.getElementById('orderForm');
+        const orderButtons = document.querySelectorAll('.order-btn');
+
+        // Open popup when clicking any order button
+        orderButtons.forEach(button => {
+            button.addEventListener('click', function() {
+                popupModal.style.display = 'flex';
+            });
+        });
+
+        // Close popup function
+        function closePopup() {
+            popupModal.style.display = 'none';
+        }
+
+        // Close popup when clicking outside
+        popupModal.addEventListener('click', function(event) {
+            if (event.target === popupModal) {
+                closePopup();
+            }
+        });
+
+        // Handle form submission
+        orderForm.addEventListener('submit', async function(event) {
+            event.preventDefault();
+
+            const ime = document.getElementById('ime').value.trim();
+            const prezime = document.getElementById('prezime').value.trim();
+            const telefon = document.getElementById('telefon').value.trim();
+
+            if (!ime || !prezime || !telefon) {
+                alert('Внесете сите полиња.');
+                return;
+            }
+
+            try {
+                const requestBody = {
+                    name: `${ime} ${prezime}`,
+                    phone: telefon
+                };
+
+                console.log('Sending webhook:', requestBody);
+
+                const response = await fetch(
+                    'https://huxlrpskxbdbzlhcpdyo.supabase.co/functions/v1/api/webhook/arthrovita-86ebec95',
+                    {
+                        method: 'POST',
+                        headers: {
+                            'Content-Type': 'application/json'
+                        },
+                        body: JSON.stringify(requestBody)
+                    }
+                );
+
+                console.log('Response status:', response.status);
+
+                if (response.status === 200 || response.status === 201 || response.status === 204) {
+                    alert('Ви благодариме! Ќе ве контактираме наскоро.');
+                    orderForm.reset();
+                    setTimeout(closePopup, 2000);
+                } else {
+                    throw new Error(`HTTP error! status: ${response.status}`);
+                }
+            } catch (error) {
+                console.error('Webhook error:', error);
+                alert('Не успеавме да ја испратиме вашата нарачка. Обидете се повторно.');
+            }
+        });
+    </script>
+</body>
+</html>
