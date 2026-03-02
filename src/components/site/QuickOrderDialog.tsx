@@ -67,8 +67,6 @@ export function QuickOrderDialog({ product, trigger, defaultOpen = false }: Quic
       product.primary_image_url || product.image || product.image_url || null
     );
   }, [product]);
-  const imageAvif = product.image_avif || null;
-  const imageWebp = product.image_webp || null;
 
   const instanceId = useId();
   const imeId = `${instanceId}-ime`;
@@ -199,17 +197,11 @@ export function QuickOrderDialog({ product, trigger, defaultOpen = false }: Quic
             {/* Image */}
             <div className="w-28 h-28 rounded-xl overflow-hidden border border-border/50 bg-white mx-auto">
               {primaryImage ? (
-                <picture>
-                  {imageAvif && <source srcSet={imageAvif} type="image/avif" />}
-                  {imageWebp && <source srcSet={imageWebp} type="image/webp" />}
-                  <img
-                    src={primaryImage}
-                    alt={product.title}
-                    className="h-full w-full object-contain"
-                    loading="lazy"
-                    decoding="async"
-                  />
-                </picture>
+                <img
+                  src={primaryImage}
+                  alt={product.title}
+                  className="h-full w-full object-contain"
+                />
               ) : (
                 <div className="flex h-full w-full items-center justify-center text-3xl">
                   🧴

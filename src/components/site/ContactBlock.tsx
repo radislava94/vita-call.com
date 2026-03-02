@@ -4,16 +4,11 @@ import { Button } from "@/components/ui/button";
 
 export function ContactBlock() {
   return (
-    <section id="why-vita-call" className="py-16 bg-gradient-to-b from-accent/10 to-background">
+    <section className="py-16 bg-gradient-to-b from-accent/10 to-background">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="text-center mb-12">
-          <h2 className="text-3xl md:text-4xl font-bold text-foreground mb-4">
-            Зошто да изберете Vita Call?
-          </h2>
           <p className="text-lg text-muted-foreground">
-            Добијте локален call center Македонија партнер за телефонска
-            продажба, телемаркетинг и outsource call center операции со јасни
-            резултати и професионална комуникација.
+            Секогаш сме тука за вас - за било какви прашања или совети
           </p>
         </div>
 
@@ -66,10 +61,10 @@ export function ContactBlock() {
               </h3>
               <p className="text-sm text-muted-foreground">
                 <a
-                  href="mailto:vitacall.mk@gmail.com"
+                  href="mailto:info@vitacall.mk"
                   className="hover:text-primary transition-colors"
                 >
-                  vitacall.mk@gmail.com
+                  info@vitacall.mk
                 </a>
               </p>
             </CardContent>

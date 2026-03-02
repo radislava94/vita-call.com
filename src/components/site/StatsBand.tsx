@@ -6,17 +6,8 @@ const stats = [
 
 export function StatsBand() {
   return (
-    <section id="support" className="py-16 bg-gradient-to-r from-primary/5 via-primary-light/10 to-accent/20">
+    <section className="py-16 bg-gradient-to-r from-primary/5 via-primary-light/10 to-accent/20">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="text-center mb-10">
-          <h2 className="text-3xl md:text-4xl font-bold text-foreground mb-4">
-            Customer Support 24/7
-          </h2>
-          <p className="text-lg text-muted-foreground">
-            Континуирана customer support достапност за побрза реакција и
-            поголемо задоволство на клиентите.
-          </p>
-        </div>
         <div className="grid grid-cols-1 md:grid-cols-3 gap-8 text-center">
           {stats.map((stat, index) => (
             <div key={index} className="group">

@@ -30,15 +30,11 @@ const valueProps = [
 
 export function ValueProps() {
   return (
-    <section id="telemarketing" className="py-16 bg-gradient-to-b from-background to-accent/20">
+    <section className="py-16 bg-gradient-to-b from-background to-accent/20">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="text-center mb-12">
-          <h2 className="text-3xl md:text-4xl font-bold text-foreground mb-4">
-            Телефонска Продажба и Телемаркетинг
-          </h2>
           <p className="text-lg text-muted-foreground max-w-2xl mx-auto">
-            Нашиот телемаркетинг пристап комбинира продажни скрипти, обука и
-            следење на KPI за постојан раст на телефонска продажба.
+            Нашите вредности и ангажман кон квалитет и транспарентност
           </p>
         </div>
 

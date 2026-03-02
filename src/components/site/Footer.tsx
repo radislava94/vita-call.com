@@ -9,10 +9,10 @@ const footerLinks = {
     { name: "Контакт", href: "/contact" },
   ],
   additional: [
-    { name: "Телефонска Продажба", href: "/products" },
-    { name: "Outsource Call Center", href: "/about" },
-    { name: "Customer Support 24/7", href: "/contact" },
     { name: "Прашања и одговори", href: "/faq" },
+    { name: "Услови за користење", href: "/terms" },
+    { name: "Политика на приватност", href: "/privacy" },
+    { name: "Враќање на производи", href: "/returns" },
   ],
 };
 
@@ -30,7 +30,7 @@ export function Footer() {
               >
                 <img
                   src={VitaCall_Logo}
-                  alt="Vita Call call center Македонија лого"
+                  alt="VitaCall Logo"
                   className="
       h-14 sm:h-16 w-auto object-contain
       transition-transform duration-300 ease-out
@@ -41,10 +41,8 @@ export function Footer() {
               </Link>
             </div>
             <p className="text-sm text-muted-foreground leading-relaxed mb-4">
-              Vita Call е професионален call center Македонија тим за
-              телемаркетинг, телефонска продажба и outsource call center
-              операции. Обезбедуваме customer support услуги за бизниси во
-              Северна Македонија.
+              Природни решенија за вашето здравје и убавина. Сертифицирани
+              производи од најквалитетни состојки.
             </p>
           </div>
 

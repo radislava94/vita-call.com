@@ -43,15 +43,14 @@ export function FeaturedGrid() {
     (error ? "Не можеме да ги вчитаме препорачаните производи." : null);
 
   return (
-    <section id="outsource" className="py-16">
+    <section className="py-16">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="text-center mb-12">
           <h2 className="text-3xl md:text-4xl font-bold text-foreground mb-4">
-            Outsource Call Center Услуги
+            Препорачани производи
           </h2>
           <p className="text-lg text-muted-foreground">
-            Флексибилни outsource call center решенија за продажба,
-            квалификација на лидови и поддршка на клиенти.
+            Откријте ги нашите најпопуларни природни решенија
           </p>
         </div>
 
@@ -82,8 +81,6 @@ export function FeaturedGrid() {
                 product.image ||
                 product.image_url ||
                 null;
-              const imageAvif = product.image_avif || null;
-              const imageWebp = product.image_webp || null;
 
               return (
                 <Card
@@ -93,17 +90,12 @@ export function FeaturedGrid() {
                   <div className="aspect-[4/3] relative overflow-hidden bg-transparent">
                     <div className="w-full h-full flex items-center justify-center bg-transparent p-2 sm:p-3 md:p-4">
                       {primaryImage ? (
-                        <picture>
-                          {imageAvif && <source srcSet={imageAvif} type="image/avif" />}
-                          {imageWebp && <source srcSet={imageWebp} type="image/webp" />}
-                          <img
-                            src={primaryImage}
-                            alt={`${product.title} - outsource call center и телефонска продажба во Македонија`}
-                            className="h-full w-full object-contain"
-                            loading="lazy"
-                            decoding="async"
-                          />
-                        </picture>
+                        <img
+                          src={primaryImage}
+                          alt={product.title}
+                          className="h-full w-full object-contain"
+                          loading="lazy"
+                        />
                       ) : (
                         <div className="text-center">
                           <div className="text-4xl mb-2">🌿</div>
