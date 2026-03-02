@@ -133,6 +133,8 @@ export default function ProductDetailPage() {
     product.image_url,
   ].filter(Boolean) as string[];
   const primaryImage = selectedImage || images[0] || null;
+  const imageAvif = product.image_avif || null;
+  const imageWebp = product.image_webp || null;
 
   return (
     <div className="min-h-screen bg-background">
@@ -149,11 +151,16 @@ export default function ProductDetailPage() {
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-12">
           <div className="aspect-square rounded-lg overflow-hidden bg-transparent p-2 sm:p-4 md:p-6">
             {primaryImage ? (
-              <img
-                src={primaryImage}
-                alt={product.title}
-                className="w-full h-full object-contain"
-              />
+              <picture>
+                {imageAvif && <source srcSet={imageAvif} type="image/avif" />}
+                {imageWebp && <source srcSet={imageWebp} type="image/webp" />}
+                <img
+                  src={primaryImage}
+                  alt={product.title}
+                  className="w-full h-full object-contain"
+                  decoding="async"
+                />
+              </picture>
             ) : (
               <div className="w-full h-full flex items-center justify-center">
                 <div className="text-center">

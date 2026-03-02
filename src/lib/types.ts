@@ -6,6 +6,8 @@ export type Product = {
   price: number | string;
   // Original, pre-discount price (for strikethrough display)
   original_price?: number | string;
+  image_avif?: string;
+  image_webp?: string;
   primary_image_url?: string;
   image?: string;
   image_url?: string;

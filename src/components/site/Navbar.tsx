@@ -58,8 +58,10 @@ export function Navbar() {
               <div className="text-2xl font-bold text-primary font-[var(--font-script)] relative flex items-center justify-center group">
                 <img
                   src={VitaCall_Logo}
-                  alt="VitaCall Logo"
+                  alt="Vita Call професионален call center Македонија"
                   className="h-14 sm:h-14 w-auto object-contain transition-transform duration-300 ease-out group-hover:scale-110 transform-gpu will-change-transform"
+                  fetchPriority="high"
+                  decoding="async"
                 />
               </div>
             </Link>

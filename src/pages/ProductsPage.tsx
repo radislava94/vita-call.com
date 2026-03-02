@@ -176,6 +176,8 @@ export default function ProductsPage() {
                 product.image ||
                 product.image_url ||
                 null;
+              const imageAvif = product.image_avif || null;
+              const imageWebp = product.image_webp || null;
 
               return (
                 <Card
@@ -191,12 +193,17 @@ export default function ProductsPage() {
                   >
                     <div className="w-full h-full bg-transparent flex items-center justify-center relative overflow-hidden p-2 sm:p-3 md:p-4">
                       {primaryImage ? (
-                        <img
-                          src={primaryImage}
-                          alt={product.title}
-                          className="w-full h-full object-contain"
-                          loading="lazy"
-                        />
+                        <picture>
+                          {imageAvif && <source srcSet={imageAvif} type="image/avif" />}
+                          {imageWebp && <source srcSet={imageWebp} type="image/webp" />}
+                          <img
+                            src={primaryImage}
+                            alt={product.title}
+                            className="w-full h-full object-contain"
+                            loading="lazy"
+                            decoding="async"
+                          />
+                        </picture>
                       ) : (
                         <div className="text-center">
                           <div className="text-4xl mb-2">🌿</div>

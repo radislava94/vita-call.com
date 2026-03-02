@@ -67,6 +67,8 @@ export function QuickOrderDialog({ product, trigger, defaultOpen = false }: Quic
       product.primary_image_url || product.image || product.image_url || null
     );
   }, [product]);
+  const imageAvif = product.image_avif || null;
+  const imageWebp = product.image_webp || null;
 
   const instanceId = useId();
   const imeId = `${instanceId}-ime`;
@@ -99,7 +101,6 @@ export function QuickOrderDialog({ product, trigger, defaultOpen = false }: Quic
 
     if (!ime || !prezime || !telefon) {
       toast({
-        position: "center",
         title: "Недостасуваат податоци",
         description: "Внесете сите полиња.",
         variant: "destructive",
@@ -110,7 +111,6 @@ export function QuickOrderDialog({ product, trigger, defaultOpen = false }: Quic
     if (!selectedProduct || !webhookMap[selectedProduct]) {
       console.error(`Webhook missing for product: ${selectedProduct}`);
       toast({
-        position: "center",
         title: "Грешка",
         description: "Проблем со избраниот производ. Обидете се повторно.",
         variant: "destructive",
@@ -122,9 +122,8 @@ export function QuickOrderDialog({ product, trigger, defaultOpen = false }: Quic
     try {
       const webhookUrl = webhookMap[selectedProduct];
       const requestBody = {
-        ime,
-        prezime,
-        telefon,
+        name: `${ime} ${prezime}`,
+        phone: telefon,
         product: selectedProduct
       };
 
@@ -145,7 +144,6 @@ export function QuickOrderDialog({ product, trigger, defaultOpen = false }: Quic
 
       if (response.status === 200 || response.status === 201 || response.status === 204) {
         toast({
-          position: "center",
           title: "Успешно!",
           description: "Ви благодариме! Ќе ве контактираме наскоро.",
         });
@@ -163,7 +161,6 @@ export function QuickOrderDialog({ product, trigger, defaultOpen = false }: Quic
     } catch (error: any) {
       console.error('Webhook error:', error);
       toast({
-        position: "center",
         title: "Грешка",
         description:
           error?.message ||
@@ -202,11 +199,17 @@ export function QuickOrderDialog({ product, trigger, defaultOpen = false }: Quic
             {/* Image */}
             <div className="w-28 h-28 rounded-xl overflow-hidden border border-border/50 bg-white mx-auto">
               {primaryImage ? (
-                <img
-                  src={primaryImage}
-                  alt={product.title}
-                  className="h-full w-full object-contain"
-                />
+                <picture>
+                  {imageAvif && <source srcSet={imageAvif} type="image/avif" />}
+                  {imageWebp && <source srcSet={imageWebp} type="image/webp" />}
+                  <img
+                    src={primaryImage}
+                    alt={product.title}
+                    className="h-full w-full object-contain"
+                    loading="lazy"
+                    decoding="async"
+                  />
+                </picture>
               ) : (
                 <div className="flex h-full w-full items-center justify-center text-3xl">
                   🧴
