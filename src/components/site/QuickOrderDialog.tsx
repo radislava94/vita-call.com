@@ -15,6 +15,28 @@ import { Label } from "@/components/ui/label";
 import { useToast } from "@/hooks/use-toast";
 import type { Product } from "@/lib/types";
 
+// Webhook map for all 7 products
+const webhookMap: Record<string, string> = {
+  provita: "https://huxlrpskxbdbzlhcpdyo.supabase.co/functions/v1/api/webhook/pro-vita-72fb8440",
+  stallion: "https://huxlrpskxbdbzlhcpdyo.supabase.co/functions/v1/api/webhook/arthrovita-86ebec95",
+  arthrovita: "https://huxlrpskxbdbzlhcpdyo.supabase.co/functions/v1/api/webhook/arthrovita-7bd167e8",
+  optivita: "https://huxlrpskxbdbzlhcpdyo.supabase.co/functions/v1/api/webhook/opti-vita-83ad2490",
+  vitafit: "https://huxlrpskxbdbzlhcpdyo.supabase.co/functions/v1/api/webhook/vita-fit-64e68e4b",
+  cardivita: "https://huxlrpskxbdbzlhcpdyo.supabase.co/functions/v1/api/webhook/cardi-vita-0961f9b2",
+  diavita: "https://huxlrpskxbdbzlhcpdyo.supabase.co/functions/v1/api/webhook/dia-vita-b54b976e"
+};
+
+// Map product IDs to webhook keys
+const productKeyMap: Record<string, string> = {
+  "arthrovita": "arthrovita",
+  "cardivita": "cardivita",
+  "diavita": "diavita",
+  "optivita": "optivita",
+  "provita": "provita",
+  "vitafit": "vitafit",
+  "stallion-power": "stallion"
+};
+
 interface QuickOrderDialogProps {
   product: Product;
   trigger: ReactNode;
@@ -38,6 +60,7 @@ export function QuickOrderDialog({ product, trigger, defaultOpen = false }: Quic
   const [open, setOpen] = useState(defaultOpen);
   const [formData, setFormData] = useState<FormState>(initialFormState);
   const [submitting, setSubmitting] = useState(false);
+  const [selectedProduct, setSelectedProduct] = useState<string>("");
 
   const primaryImage = useMemo(() => {
     return (
@@ -52,15 +75,19 @@ export function QuickOrderDialog({ product, trigger, defaultOpen = false }: Quic
 
   const handleOpenChange = (nextOpen: boolean) => {
     if (submitting) return;
-    if (!nextOpen) setFormData(initialFormState);
+    if (!nextOpen) {
+      setFormData(initialFormState);
+      setSelectedProduct("");
+    } else {
+      // Auto-select this product when dialog opens
+      const productKey = productKeyMap[product.id] || product.id;
+      setSelectedProduct(productKey);
+    }
     setOpen(nextOpen);
   };
 
-  const formatPhone = (raw: string) => {
-    const digits = raw.replace(/\D/g, "").slice(0, 9); // 07x xxx xxx
-    return digits
-      .replace(/(\d{3})(\d)/, "$1 $2")
-      .replace(/(\d{3}) (\d{3})(\d)/, "$1 $2 $3");
+  const handleSelectProduct = (key: string) => {
+    setSelectedProduct(key);
   };
 
   const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
@@ -80,25 +107,37 @@ export function QuickOrderDialog({ product, trigger, defaultOpen = false }: Quic
       return;
     }
 
+    if (!selectedProduct || !webhookMap[selectedProduct]) {
+      console.error(`Webhook missing for product: ${selectedProduct}`);
+      toast({
+        position: "center",
+        title: "Грешка",
+        description: "Проблем со избраниот производ. Обидете се повторно.",
+        variant: "destructive",
+      });
+      return;
+    }
+
     setSubmitting(true);
     try {
+      const webhookUrl = webhookMap[selectedProduct];
       const requestBody = {
-        name: `${ime} ${prezime}`,
-        phone: telefon,
+        ime,
+        prezime,
+        telefon,
+        product: selectedProduct
       };
 
-      console.log('Sending webhook:', requestBody);
+      console.log('Sending webhook to:', webhookUrl);
+      console.log('Request body:', requestBody);
 
-      const response = await fetch(
-        "https://huxlrpskxbdbzlhcpdyo.supabase.co/functions/v1/api/webhook/arthrovita-86ebec95",
-        {
-          method: "POST",
-          headers: {
-            "Content-Type": "application/json",
-          },
-          body: JSON.stringify(requestBody),
-        }
-      );
+      const response = await fetch(webhookUrl, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(requestBody),
+      });
 
       console.log('Response status:', response.status);
       const responseData = await response.text();
@@ -112,6 +151,7 @@ export function QuickOrderDialog({ product, trigger, defaultOpen = false }: Quic
         });
 
         setFormData(initialFormState);
+        setSelectedProduct("");
         
         // Close the popup after 2 seconds
         setTimeout(() => {
