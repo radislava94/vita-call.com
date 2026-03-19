@@ -40,7 +40,7 @@ export default function ContactPage() {
                     Адреса на шоурум
                   </h3>
                   <p className="text-muted-foreground">
-                    Ул. Природа бр. 123
+                    Карпош 4,
                     <br />
                     1000 Скопје, Македонија
                   </p>

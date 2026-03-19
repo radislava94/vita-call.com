@@ -23,7 +23,7 @@ export function ContactBlock() {
                 Адреса
               </h3>
               <p className="text-sm text-muted-foreground">
-                ул. Природа бр. 123
+                Карпош 4,
                 <br />
                 1000 Скопје, Македонија
               </p>
