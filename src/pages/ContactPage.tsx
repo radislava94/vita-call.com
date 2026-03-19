@@ -51,10 +51,10 @@ export default function ContactPage() {
                   </h3>
                   <p>
                     <a
-                      href="tel:+38970123456"
+                      href="tel:+38971206777"
                       className="text-primary hover:text-primary-light"
                     >
-                      +389 70 123 456
+                      +389 71 206 777
                     </a>
                   </p>
                 </div>

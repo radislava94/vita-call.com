@@ -41,10 +41,10 @@ export function ContactBlock() {
               </h3>
               <p className="text-sm text-muted-foreground">
                 <a
-                  href="tel:+38970123456"
+                  href="tel:+38971206777"
                   className="hover:text-primary transition-colors"
                 >
-                  +389 70 123 456
+                  +389 71 206 777
                 </a>
               </p>
             </CardContent>
@@ -61,10 +61,10 @@ export function ContactBlock() {
               </h3>
               <p className="text-sm text-muted-foreground">
                 <a
-                  href="mailto:info@vitacall.mk"
+                  href="mailto:vitacall.mk@gmail.com"
                   className="hover:text-primary transition-colors"
                 >
-                  info@vitacall.mk
+                  vitacall.mk@gmail.com
                 </a>
               </p>
             </CardContent>
